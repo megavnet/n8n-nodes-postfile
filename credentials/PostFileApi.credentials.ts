@@ -5,10 +5,10 @@ import {
 	INodeProperties,
 } from 'n8n-workflow';
 
-export class FilePostApi implements ICredentialType {
-	name = 'filePostApi';
-	displayName = 'FilePost API';
-	documentationUrl = 'https://filepost.dev/docs';
+export class PostFileApi implements ICredentialType {
+	name = 'postFileApi';
+	displayName = 'PostFile API';
+	documentationUrl = 'https://postfile.net/docs';
 	properties: INodeProperties[] = [
 		{
 			displayName: 'API Key',
@@ -17,7 +17,7 @@ export class FilePostApi implements ICredentialType {
 			typeOptions: { password: true },
 			default: '',
 			placeholder: 'fh_...',
-			description: 'Your FilePost API key. Get one free at filepost.dev',
+			description: 'Your PostFile API key. Get one free at postfile.net',
 		},
 	];
 	authenticate: IAuthenticateGeneric = {
@@ -30,7 +30,7 @@ export class FilePostApi implements ICredentialType {
 	};
 	test: ICredentialTestRequest = {
 		request: {
-			baseURL: 'https://filepost.dev/v1',
+			baseURL: 'https://postfile.net/v1',
 			url: '/account',
 			method: 'GET',
 		},

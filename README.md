@@ -1,6 +1,6 @@
-# n8n-nodes-filepost
+# n8n-nodes-postfile
 
-This is an [n8n](https://n8n.io/) community node for [FilePost](https://filepost.dev) — a file upload API that gives you instant public CDN URLs.
+This is an [n8n](https://n8n.io/) community node for [PostFile](https://postfile.net) — a file upload API that gives you instant public CDN URLs.
 
 Upload any file from your n8n workflow and get back a permanent public URL. No S3 buckets, no storage config.
 
@@ -15,11 +15,11 @@ Upload any file from your n8n workflow and get back a permanent public URL. No S
 
 ## Credentials
 
-You need a FilePost API key. Get one free at [filepost.dev](https://filepost.dev).
+You need a PostFile API key. Get one free at [postfile.net](https://postfile.net).
 
-1. Go to [filepost.dev](https://filepost.dev)
+1. Go to [postfile.net](https://postfile.net)
 2. Enter your email to get a free API key
-3. In n8n, go to **Credentials** > **New** > **FilePost API**
+3. In n8n, go to **Credentials** > **New** > **PostFile API**
 4. Paste your API key
 
 ## Installation
@@ -27,13 +27,13 @@ You need a FilePost API key. Get one free at [filepost.dev](https://filepost.dev
 ### In n8n (recommended)
 
 1. Go to **Settings** > **Community Nodes**
-2. Search for `n8n-nodes-filepost`
+2. Search for `n8n-nodes-postfile`
 3. Click **Install**
 
 ### Manual
 
 ```bash
-npm install n8n-nodes-filepost
+npm install n8n-nodes-postfile
 ```
 
 ## Usage Example
@@ -41,7 +41,7 @@ npm install n8n-nodes-filepost
 ### Upload a file and get a URL
 
 1. Add an **HTTP Request** or **Read Binary File** node to get a file
-2. Connect it to the **FilePost** node
+2. Connect it to the **PostFile** node
 3. Set operation to **Upload File**
 4. Set the binary property name (default: `data`)
 5. Run — you get back a JSON response with `url`, `file_id`, `size`, and `content_type`
@@ -51,7 +51,7 @@ npm install n8n-nodes-filepost
 ```json
 {
   "file_id": "abc123",
-  "url": "https://cdn.filepost.dev/abc123/photo.jpg",
+  "url": "https://cdn.postfile.net/abc123/photo.jpg",
   "size": 248192,
   "content_type": "image/jpeg"
 }
@@ -67,9 +67,9 @@ npm install n8n-nodes-filepost
 
 ## Links
 
-- [FilePost Homepage](https://filepost.dev)
-- [API Documentation](https://filepost.dev/docs)
-- [Blog](https://filepost.dev/blog)
+- [PostFile Homepage](https://postfile.net)
+- [API Documentation](https://postfile.net/docs)
+- [Blog](https://postfile.net/blog)
 
 ## License
 

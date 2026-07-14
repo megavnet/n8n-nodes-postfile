@@ -1,7 +1,7 @@
 {
-  "name": "n8n-nodes-filepost",
-  "version": "0.1.6",
-  "description": "n8n community node for FilePost. Upload files and get public URLs instantly.",
+  "name": "n8n-nodes-postfile",
+  "version": "0.0.1",
+  "description": "n8n community node for PostFile. Upload files and get public URLs instantly.",
   "keywords": [
     "n8n-community-node-package",
     "n8n",
@@ -11,27 +11,27 @@
     "cdn"
   ],
   "license": "MIT",
-  "homepage": "https://filepost.dev",
+  "homepage": "https://postfile.net",
   "author": {
-    "name": "FilePost",
-    "email": "support@filepost.dev"
+    "name": "PostFile",
+    "email": "support@postfile.net"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mussemou/n8n-nodes-filepost.git"
+    "url": "git+https://github.com/megavnet/n8n-nodes-postfile.git"
   },
   "main": "index.js",
   "n8n": {
     "n8nNodesApiVersion": 1,
     "credentials": [
-      "dist/credentials/FilePostApi.credentials.js"
+      "dist/credentials/PostFileApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/FilePost/FilePost.node.js"
+      "dist/nodes/PostFile/PostFile.node.js"
     ]
   },
   "scripts": {
-    "build": "tsc && cp nodes/FilePost/filepost.svg dist/nodes/FilePost/ 2>/dev/null || true",
+    "build": "tsc && cp nodes/PostFile/postfile.svg dist/nodes/PostFile/ 2>/dev/null || true",
     "dev": "tsc --watch",
     "prepublishOnly": "npm run build"
   },

@@ -7,23 +7,23 @@ import {
 	NodeApiError,
 } from 'n8n-workflow';
 
-export class FilePost implements INodeType {
+export class PostFile implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'FilePost',
-		name: 'filePost',
-		icon: 'file:filepost.svg',
+		displayName: 'PostFile',
+		name: 'postFile',
+		icon: 'file:postfile.svg',
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"]}}',
 		description: 'Uploads files and returns public URLs',
 		defaults: {
-			name: 'FilePost',
+			name: 'PostFile',
 		},
 		inputs: ['main'],
 		outputs: ['main'],
 		credentials: [
 			{
-				name: 'filePostApi',
+				name: 'postFileApi',
 				required: true,
 			},
 		],
@@ -121,7 +121,7 @@ export class FilePost implements INodeType {
 		const items = this.getInputData();
 		const returnData: INodeExecutionData[] = [];
 		const operation = this.getNodeParameter('operation', 0) as string;
-		const baseUrl = 'https://filepost.dev/v1';
+		const baseUrl = 'https://postfile.net/v1';
 
 		for (let i = 0; i < items.length; i++) {
 			try {
@@ -140,7 +140,7 @@ export class FilePost implements INodeType {
 					const formData = new FormData();
 					formData.append('file', new Blob([new Uint8Array(buffer)], { type: mimeType }), fileName);
 
-					const response = await this.helpers.httpRequestWithAuthentication.call(this, 'filePostApi', {
+					const response = await this.helpers.httpRequestWithAuthentication.call(this, 'postFileApi', {
 						method: 'POST',
 						url: `${baseUrl}/upload`,
 						body: formData,
@@ -153,7 +153,7 @@ export class FilePost implements INodeType {
 					const page = this.getNodeParameter('page', i) as number;
 					const perPage = this.getNodeParameter('perPage', i) as number;
 
-					const response = await this.helpers.httpRequestWithAuthentication.call(this, 'filePostApi', {
+					const response = await this.helpers.httpRequestWithAuthentication.call(this, 'postFileApi', {
 						method: 'GET',
 						url: `${baseUrl}/files`,
 						qs: { page, per_page: perPage },
@@ -165,7 +165,7 @@ export class FilePost implements INodeType {
 				} else if (operation === 'get') {
 					const fileId = this.getNodeParameter('fileId', i) as string;
 
-					const response = await this.helpers.httpRequestWithAuthentication.call(this, 'filePostApi', {
+					const response = await this.helpers.httpRequestWithAuthentication.call(this, 'postFileApi', {
 						method: 'GET',
 						url: `${baseUrl}/files/${fileId}`,
 						json: true,
@@ -176,7 +176,7 @@ export class FilePost implements INodeType {
 				} else if (operation === 'delete') {
 					const fileId = this.getNodeParameter('fileId', i) as string;
 
-					const response = await this.helpers.httpRequestWithAuthentication.call(this, 'filePostApi', {
+					const response = await this.helpers.httpRequestWithAuthentication.call(this, 'postFileApi', {
 						method: 'DELETE',
 						url: `${baseUrl}/files/${fileId}`,
 						json: true,
