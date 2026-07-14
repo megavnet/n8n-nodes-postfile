@@ -7,6 +7,21 @@ import {
 	NodeApiError,
 } from 'n8n-workflow';
 
+const LARGE_UPLOAD_THRESHOLD_BYTES = 100 * 1024 * 1024;
+
+/** Prefix hostname with upload. for large-file uploads (e.g. postfile.net → upload.postfile.net). */
+function getUploadBaseUrl(baseUrl: string, fileSizeBytes: number): string {
+	if (fileSizeBytes <= LARGE_UPLOAD_THRESHOLD_BYTES) {
+		return baseUrl;
+	}
+
+	const url = new URL(baseUrl);
+	if (!url.hostname.startsWith('upload.')) {
+		url.hostname = `upload.${url.hostname}`;
+	}
+	return url.toString().replace(/\/$/, '');
+}
+
 export class PostFile implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'PostFile',
@@ -141,9 +156,11 @@ export class PostFile implements INodeType {
 					const formData = new FormData();
 					formData.append('file', new Blob([new Uint8Array(buffer)], { type: mimeType }), fileName);
 
+					const uploadBaseUrl = getUploadBaseUrl(baseUrl, buffer.length);
+
 					const response = await this.helpers.httpRequestWithAuthentication.call(this, 'postFileApi', {
 						method: 'POST',
-						url: `${baseUrl}/upload`,
+						url: `${uploadBaseUrl}/upload`,
 						body: formData,
 						json: true,
 					});
