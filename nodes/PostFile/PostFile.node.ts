@@ -121,7 +121,8 @@ export class PostFile implements INodeType {
 		const items = this.getInputData();
 		const returnData: INodeExecutionData[] = [];
 		const operation = this.getNodeParameter('operation', 0) as string;
-		const baseUrl = 'https://postfile.net/v1';
+		const credentials = await this.getCredentials('postFileApi');
+		const baseUrl = (credentials.url as string) || 'https://postfile.net/v1';
 
 		for (let i = 0; i < items.length; i++) {
 			try {
