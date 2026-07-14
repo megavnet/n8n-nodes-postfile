@@ -61,9 +61,7 @@ npm install n8n-nodes-postfile
 
 | Plan | Price | Uploads/mo | Max File Size |
 |------|-------|-----------|---------------|
-| Free | $0 | 300 | 50MB |
-| Starter | $9/mo | 5,000 | 200MB |
-| Pro | $29/mo | 25,000 | 500MB |
+| Free | $0 | Unlimited | 50MB |
 
 ## Links
 
