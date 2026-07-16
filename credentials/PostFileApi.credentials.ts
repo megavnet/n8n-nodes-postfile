@@ -10,6 +10,10 @@ export class PostFileApi implements ICredentialType {
 	name = 'postFileApi';
 	displayName = 'PostFile API';
 	documentationUrl = 'https://postfile.net/docs';
+	icon = {
+		light: 'file:postfile.svg',
+		dark: 'file:postfile.dark.svg',
+	} as const;
 	properties: INodeProperties[] = [
 		{
 			displayName: 'API Key',

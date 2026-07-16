@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-postfile",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "n8n community node for PostFile. Upload files and get public URLs instantly.",
   "keywords": [
     "n8n-community-node-package",
@@ -31,7 +31,7 @@
     ]
   },
   "scripts": {
-    "build": "tsc && cp nodes/PostFile/postfile.svg dist/nodes/PostFile/ 2>/dev/null || true",
+    "build": "tsc && mkdir -p dist/nodes/PostFile dist/credentials && cp nodes/PostFile/*.svg dist/nodes/PostFile/ && cp credentials/*.svg dist/credentials/",
     "dev": "tsc --watch",
     "prepublishOnly": "npm run build"
   },

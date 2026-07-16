@@ -5,6 +5,7 @@ import {
 	INodeTypeDescription,
 	JsonObject,
 	NodeApiError,
+	NodeConnectionTypes,
 } from 'n8n-workflow';
 
 const LARGE_UPLOAD_THRESHOLD_BYTES = 100 * 1024 * 1024;
@@ -26,7 +27,10 @@ export class PostFile implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'PostFile',
 		name: 'postFile',
-		icon: 'file:postfile.svg',
+		icon: {
+			light: 'file:postfile.svg',
+			dark: 'file:postfile.dark.svg',
+		},
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"]}}',
@@ -34,8 +38,9 @@ export class PostFile implements INodeType {
 		defaults: {
 			name: 'PostFile',
 		},
-		inputs: ['main'],
-		outputs: ['main'],
+		usableAsTool: true,
+		inputs: [NodeConnectionTypes.Main],
+		outputs: [NodeConnectionTypes.Main],
 		credentials: [
 			{
 				name: 'postFileApi',
@@ -50,16 +55,10 @@ export class PostFile implements INodeType {
 				noDataExpression: true,
 				options: [
 					{
-						name: 'Upload File',
-						value: 'upload',
-						description: 'Uploads a file and returns a public URL',
-						action: 'Upload file',
-					},
-					{
-						name: 'List Files',
-						value: 'list',
-						description: 'Lists uploaded files',
-						action: 'List files',
+						name: 'Delete File',
+						value: 'delete',
+						description: 'Deletes a file',
+						action: 'Delete file',
 					},
 					{
 						name: 'Get File',
@@ -68,10 +67,16 @@ export class PostFile implements INodeType {
 						action: 'Get file details',
 					},
 					{
-						name: 'Delete File',
-						value: 'delete',
-						description: 'Deletes a file',
-						action: 'Delete file',
+						name: 'List Files',
+						value: 'list',
+						description: 'Lists uploaded files',
+						action: 'List files',
+					},
+					{
+						name: 'Upload File',
+						value: 'upload',
+						description: 'Uploads a file and returns a public URL',
+						action: 'Upload file',
 					},
 				],
 				default: 'upload',
@@ -165,7 +170,7 @@ export class PostFile implements INodeType {
 						json: true,
 					});
 
-					returnData.push({ json: response as any });
+					returnData.push({ json: response as any, pairedItem: { item: i } });
 
 				} else if (operation === 'list') {
 					const page = this.getNodeParameter('page', i) as number;
@@ -178,7 +183,7 @@ export class PostFile implements INodeType {
 						json: true,
 					});
 
-					returnData.push({ json: response as any });
+					returnData.push({ json: response as any, pairedItem: { item: i } });
 
 				} else if (operation === 'get') {
 					const fileId = this.getNodeParameter('fileId', i) as string;
@@ -189,7 +194,7 @@ export class PostFile implements INodeType {
 						json: true,
 					});
 
-					returnData.push({ json: response as any });
+					returnData.push({ json: response as any, pairedItem: { item: i } });
 
 				} else if (operation === 'delete') {
 					const fileId = this.getNodeParameter('fileId', i) as string;
@@ -200,11 +205,11 @@ export class PostFile implements INodeType {
 						json: true,
 					});
 
-					returnData.push({ json: response as any });
+					returnData.push({ json: response as any, pairedItem: { item: i } });
 				}
 			} catch (error) {
 				if (this.continueOnFail()) {
-					returnData.push({ json: { error: (error as Error).message } });
+					returnData.push({ json: { error: (error as Error).message }, pairedItem: { item: i } });
 					continue;
 				}
 				throw new NodeApiError(this.getNode(), error as JsonObject, { itemIndex: i });
